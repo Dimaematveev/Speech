@@ -16,6 +16,7 @@
             
             
             <Button x:Name="button6" Content="Выбрать файл" Click="button6_Click" Height="30" Width="100"/>
+            <TextBox x:Name="FN" Height="30" Width="150"/>
             <Button x:Name="button7" Content="Сохранить данные как" Click="button7_Click" Height="30" Width="150"/>
             <TextBox x:Name="UserName" Height="30" Width="150"/>
             <Button x:Name="button5" Content="Проверить данные" Click="button5_Click" Height="30" Width="100"/>

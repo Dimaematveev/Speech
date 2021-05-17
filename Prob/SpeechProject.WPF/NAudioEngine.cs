@@ -39,7 +39,7 @@ namespace SpeechProject.WPF
         #endregion
 
         #region Constants
-        private const int waveformCompressedPointCount = 100;
+        private const int waveformCompressedPointCount = 64;
         private const int repeatThreshold = 200;
         #endregion
 

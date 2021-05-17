@@ -210,18 +210,25 @@ namespace SpeechProject.WPF
 
         private void button5_Click(object sender, RoutedEventArgs e)
         {
-            
+             var user = ListUser.Find(GetData(filename));
+            if (user == null)
+            {
+                MessageBox.Show("Нет такого пользователя!");
+                return;
+            }
+            MessageBox.Show(user.Name);
         }
         private string filename;
         private void button6_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "(*.mp3, *.m4a, *.wav)|*.mp3;*.m4a;*.wav";
-            openDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            openDialog.Filter = "(*.mp3)|*.mp3";
+            openDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory +"Sound1\\";
             if (openDialog.ShowDialog() == true)
             {
+                
                 filename =  openDialog.FileName;
-
+                FN.Text = filename.Substring(filename.LastIndexOf("\\"));
             }
         }
 
@@ -233,6 +240,17 @@ namespace SpeechProject.WPF
                 return;
             }
 
+            string str = ListUser.AddUserData(UserName.Text, GetData(filename));
+            if (str !=null)
+            {
+                MessageBox.Show(str);
+            }
+        }
+
+        private float[] GetData(string filename)
+        {
+            NAudioEngine.Instance.OpenFile(filename);
+            return NAudioEngine.Instance.WaveformData;
         }
         //private void button5_Click(object sender, RoutedEventArgs e)
         //{

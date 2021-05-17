@@ -38,46 +38,74 @@ namespace SpeechProject.WPF
 
             }
             userDatas.Add(new UserData(name, data));
+            LoadToFile();
             return null;
         }
 
 
         public void SetFromFile()
         {
-            using (StreamReader streamReader = new StreamReader(file))
+            using (StreamReader streamReader = new StreamReader(file,System.Text.Encoding.Default))
             {
-                string str = streamReader.ReadLine();
-                if (str==null)
+                while (true)
                 {
-                    return;
-                }
-                var st = str.Split(';');
-                string na = st[0];
-                List<float> fl = new List<float>();
-                for (int i = 1; i < st.Length; i++)
-                {
-                    fl.Add(float.Parse(st[i]));
-                }
 
-                AddUserData(na, fl.ToArray());
+                    string str = streamReader.ReadLine();
+                    if (str == null)
+                    {
+                        return;
+                    }
+                    var st = str.Split(';');
+                    string na = st[0];
+                    List<float> fl = new List<float>();
+                    for (int i = 1; i < st.Length; i++)
+                    {
+                        fl.Add(float.Parse(st[i]));
+                    }
+                    userDatas.Add(new UserData(na, fl.ToArray()));
+                }
             }
         }
 
-        public void GetFromFile()
+        public void LoadToFile()
         {
-            using (StreamWriter streamWriter = new StreamWriter(file) )
+            using (StreamWriter streamWriter = new StreamWriter(file, false, System.Text.Encoding.Default)) 
             {
-                string str = "";
+                
                 foreach (var user in userDatas)
                 {
+                    string str = "";
                     str += user.Name+";";
                     foreach (var item in user.Data)
                     {
                         str += item.ToString() + ";";
                     }
+                    str = str.TrimEnd(';');
                     streamWriter.WriteLine(str);
                 }
             }
+        }
+
+        public UserData Find(float[] fl)
+        {
+            float od = 0.3f;
+            for (int i = 0; i < userDatas.Count; i++)
+            {
+                bool b = true;
+                for (int j = 0; j < userDatas[i].Data.Length; j++)
+                {
+                    if (Math.Abs( userDatas[i].Data[j] - fl[j]) > od)
+                    {
+                        b = false;
+                        break;
+                    }
+                }
+                if (b == true)
+                {
+                    return userDatas[i];
+                }
+            }
+            return null;
         }
     }
 }

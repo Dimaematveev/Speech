@@ -128,5 +128,30 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sound\All.txt" />
+    <Content Include="Sound\Вика_Вика1.mp3" />
+    <Content Include="Sound\Вика_Вика1.wav" />
+    <Content Include="Sound\Вика_Вика2.mp3" />
+    <Content Include="Sound\Вика_Вика2.wav" />
+    <Content Include="Sound\Вика_Дмитрий.mp3" />
+    <Content Include="Sound\Вика_Дмитрий.wav" />
+    <Content Include="Sound\ДмитрийМ_Дмитрий1.mp3" />
+    <Content Include="Sound\ДмитрийМ_Дмитрий1.wav" />
+    <Content Include="Sound\ДмитрийМ_Дмитрий2.mp3" />
+    <Content Include="Sound\ДмитрийМ_Дмитрий2.wav" />
+    <Content Include="Sound\ДмитрийН_Дмитрий1.mp3" />
+    <Content Include="Sound\ДмитрийН_Дмитрий1.wav" />
+    <Content Include="Sound\ДмитрийН_Дмитрий2.mp3" />
+    <Content Include="Sound\ДмитрийН_Дмитрий2.wav" />
+    <Content Include="Sound\ДмитрийН_Дмитрий3.mp3" />
+    <Content Include="Sound\ДмитрийН_Дмитрий3.wav" />
+    <Content Include="Sound\Слава_Дмитрий.mp3" />
+    <Content Include="Sound\Слава_Дмитрий.wav" />
+    <Content Include="Sound\Слава_Слава1.mp3" />
+    <Content Include="Sound\Слава_Слава1.wav" />
+    <Content Include="Sound\Слава_Слава2.mp3" />
+    <Content Include="Sound\Слава_Слава2.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

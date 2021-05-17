@@ -16,46 +16,38 @@ namespace Prob_CMD
         {
 
             Console.WriteLine("Begin");
-            var name = "Sound\\Я Дмитрий.wav";
-            var reader = new WaveFileReader(name);
-            var k = FUR(reader);
-            Console.WriteLine(name);
-            foreach (var item in k)
-            {
-                
-                Console.Write($"{item};");
-            }
+            NewMethod("Sound\\Я Дмитрий (1).wav");
             Console.WriteLine();
+            NewMethod("Sound\\Я Дмитрий (2).wav");
             Console.WriteLine();
-
-            name = "Sound\\Я Дмитрий1.wav";
-            reader = new WaveFileReader(name);
-            k = FUR(reader);
-            Console.WriteLine(name);
-            foreach (var item in k)
-            {
-                Console.Write($"{item};");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-
-            name = "Sound\\Я Матвеев Дмитрий Владимирович.wav";
-            reader = new WaveFileReader(name);
-            k = FUR(reader);
-            Console.WriteLine(name);
-            foreach (var item in k)
-            {
-                Console.Write($"{item};");
-            }
+            NewMethod("Sound\\Я Дмитрий (3).wav");
             Console.WriteLine();
             Console.WriteLine("End");
             Console.ReadLine();
         }
 
+        private static void NewMethod(string name)
+        {
+            var reader = new WaveFileReader(name);
+            var k = FUR(reader);
+            Console.WriteLine(name);
+            Console.WriteLine(k.Sum());
+
+            foreach (var item in k)
+            {
+                if (item >= 0)
+                {
+                    Console.Write($" ");
+                }
+                Console.Write($"{item:0000.000}; ");
+            }
+            Console.WriteLine();
+        }
+
         private static List<double> FUR(WaveFileReader wr)
         {
             //int K = wr.WaveFormat.AverageBytesPerSecond / 1000 * 64;
-            var k = Filtr(wr, 128);
+            var k = Filtr(wr, 64);
             var m = Math.Sqrt(k.Count);
             m = Math.Ceiling(m);
             int z = k.Count;
@@ -69,6 +61,7 @@ namespace Prob_CMD
             var f = new FFT();
 
             var zz = FFT.fft(k.Select(y => new Complex(y, 0)).ToArray());
+            //var zz = FFT.nfft(zz1);
             data.AddRange(zz.Select(y => y.Real));
             return data;
         }
@@ -76,7 +69,10 @@ namespace Prob_CMD
         static List<byte> Filtr(WaveFileReader wr, int ms)
         {
             int K = wr.WaveFormat.AverageBytesPerSecond / 1000 * ms;
-            byte[] ret = new byte[wr.Length / K + 1];
+            var r1 = (int)Math.Ceiling(Math.Log10( wr.Length / K)/Math.Log10(2));
+            var r2 = (int)Math.Pow(2, r1);
+            byte[] ret = new byte[r2];
+            var r3 = wr.Length / (r2);
             byte[] b = new byte[K];
             int r;
             int j = 0;
@@ -92,8 +88,13 @@ namespace Prob_CMD
                 {
                     coun +=b[i];
                 }
-                ret[j] = (byte)(coun / r);
+                int k11 = coun / r;
+                ret[j] = (byte)(k11);
                 j++;
+                if (j== r2)
+                {
+                    break;
+                }
             } while (true);
             return ret.ToList();
 

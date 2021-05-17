@@ -19,6 +19,7 @@ using NAudio;
 using Sample_NAudio;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.Win32;
 
 namespace SpeechProject.WPF
 {
@@ -27,7 +28,7 @@ namespace SpeechProject.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        ListUser ListUser = new ListUser(AppDomain.CurrentDomain.BaseDirectory + "\\Sound1\\All.ttt");
         // WaveIn - поток для записи
         WaveIn waveIn;
         //Класс для записи в файл
@@ -171,7 +172,7 @@ namespace SpeechProject.WPF
         {
 
             wave = new WaveFileReader(outputFilename);
-
+                
 
             WaveOutEvent player = new WaveOutEvent();
 
@@ -211,38 +212,60 @@ namespace SpeechProject.WPF
         {
             
         }
-            //private void button5_Click(object sender, RoutedEventArgs e)
-            //{
-            //    string[] allfiles = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "Sound1","*.mp3");
-            //    string fileTXT = AppDomain.CurrentDomain.BaseDirectory + "Sound1\\All.txt";
-            //    foreach (var fileMP3 in allfiles)
-            //    {
-            //        NAudioEngine.Instance.OpenFile(fileMP3);
-            //        if (NAudioEngine.Instance.WaveformData != null)
-            //        {
-            //            string fn = fileTXT;
-            //            using (StreamWriter sw = new StreamWriter(fn, true, System.Text.Encoding.Default))
-            //            {
-            //                sw.Write(fileMP3+";");
-            //                foreach (var item in NAudioEngine.Instance.WaveformData)
-            //                {
-            //                    sw.Write(item);
-            //                    sw.Write(";");
-            //                }
-            //                sw.WriteLine();
+        private string filename;
+        private void button6_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter = "(*.mp3, *.m4a, *.wav)|*.mp3;*.m4a;*.wav";
+            openDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            if (openDialog.ShowDialog() == true)
+            {
+                filename =  openDialog.FileName;
 
-            //            }
-            //        }
-            //    }
+            }
+        }
 
-            //openDialog.Filter = "(*.mp3, *.m4a, *.wav)|*.mp3;*.m4a;*.wav";
-            //openDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            //if (openDialog.ShowDialog() == true)
-            //{
-            //    NAudioEngine.Instance.OpenFile(openDialog.FileName);
+        private void button7_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace( UserName.Text))
+            {
+                MessageBox.Show("Пользователь пуст!!");
+                return;
+            }
 
-            //}
-        
+        }
+        //private void button5_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string[] allfiles = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "Sound1","*.mp3");
+        //    string fileTXT = AppDomain.CurrentDomain.BaseDirectory + "Sound1\\All.txt";
+        //    foreach (var fileMP3 in allfiles)
+        //            {
+        //        NAudioEngine.Instance.OpenFile(fileMP3);
+        //        if (NAudioEngine.Instance.WaveformData != null)
+        //        {
+        //            string fn = fileTXT;
+        //            using (StreamWriter sw = new StreamWriter(fn, true, System.Text.Encoding.Default))
+        //            {
+        //                sw.Write(fileMP3+";");
+        //                foreach (var item in NAudioEngine.Instance.WaveformData)
+        //                {
+        //                    sw.Write(item);
+        //                    sw.Write(";");
+        //                }
+        //                sw.WriteLine();
+
+        //            }
+        //        }
+        //    }
+
+        //openDialog.Filter = "(*.mp3, *.m4a, *.wav)|*.mp3;*.m4a;*.wav";
+        //openDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        //if (openDialog.ShowDialog() == true)
+        //{
+        //    NAudioEngine.Instance.OpenFile(openDialog.FileName);
+
+        //}
+
 
         //private static void ReturnFile(string fileMP3, string fileTXT)
         //{
